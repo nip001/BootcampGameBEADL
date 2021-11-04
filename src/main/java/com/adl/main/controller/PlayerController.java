@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -44,8 +46,21 @@ public class PlayerController {
 	
 
 	@GetMapping("/kelas")
-	public List<ResponsePlayer> getAllPlayerByKelas(@RequestParam(value="kelas") String kelas) {
+	public ResponseEntity<String> getAllPlayerByKelas(@RequestParam(value="kelas") String kelas) {
 		List<PlayerModel> lstPlayer = playerRepo.getPlayerByKelas(kelas);
+		JSONArray list = new JSONArray();
+		
+		for (PlayerModel playerModel : lstPlayer) {
+			JSONObject obj = new JSONObject();
+			obj.put("username", playerModel.getUsername());
+			obj.put("level", playerModel.getLevel());
+			list.put(obj);
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).contentType(MediaType.APPLICATION_JSON)
+				.body(list.toString());
+		
+/*		List<PlayerModel> lstPlayer = playerRepo.getPlayerByKelas(kelas);
 		List<ResponsePlayer> lstResponse = new ArrayList<ResponsePlayer>();
 		for (PlayerModel player : lstPlayer) {
 			ResponsePlayer response = new ResponsePlayer();
@@ -55,7 +70,7 @@ public class PlayerController {
 		}
 		
 		return lstResponse;
-		
+	*/	
 		
 		/*	List<PlayerModel> lstPlayer = playerRepo.getPlayerByKelas(kelas);
 		String data = "[";
