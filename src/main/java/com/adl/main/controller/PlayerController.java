@@ -47,10 +47,10 @@ public class PlayerController {
 
 	@GetMapping("/kelas")
 	public ResponseEntity<String> getAllPlayerByKelas(@RequestParam(value="kelas") String kelas) {
-		List<PlayerModel> lstPlayer = playerRepo.getPlayerByKelas(kelas);
+		List<ResponsePlayer> lstPlayer = playerRepo.getPlayerByKelas(kelas);
 		JSONArray list = new JSONArray();
 		
-		for (PlayerModel playerModel : lstPlayer) {
+		for (ResponsePlayer playerModel : lstPlayer) {
 			JSONObject obj = new JSONObject();
 			obj.put("username", playerModel.getUsername());
 			obj.put("level", playerModel.getLevel());

@@ -16,8 +16,9 @@ public interface PlayerRepository extends JpaRepository<PlayerModel, Integer>{
 	PlayerModel getPlayerUsername(String username);
 
 
-	@Query(value="select * from player where kelas = ?1",nativeQuery = true)
-	List<PlayerModel> getPlayerByKelas(String kelas);
+	@Query(value = "select p.username,p.level from player p where kelas = ?1"
+			,nativeQuery = true)
+	List<ResponsePlayer> getPlayerByKelas(String kelas);
 
 	
 //	@Query("select p from PlayerModel p where p.username = ?1")

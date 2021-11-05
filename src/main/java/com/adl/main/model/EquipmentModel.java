@@ -1,9 +1,12 @@
 package com.adl.main.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -15,15 +18,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 @Entity
-@Table(name ="player")
-public class PlayerModel {
-	
+@Table(name="equipment")
+public class EquipmentModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	private String username;
-	private int level;
-	private String kelas;
+	private String weapon;
+	private String armor;
+	private String shoes;
 	
-	
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name="idplayer",
+	referencedColumnName = "id")
+	private PlayerModel idplayer;
 }
